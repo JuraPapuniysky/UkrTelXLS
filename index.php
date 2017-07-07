@@ -3,20 +3,16 @@ error_reporting(E_ALL);
 set_time_limit(0);
 
 date_default_timezone_set('Europe/Kiev');
-
-/** Include path **/
-set_include_path(get_include_path() . PATH_SEPARATOR . './Classes/');
-
-/** PHPExcel_IOFactory */
-include 'PHPExcel/IOFactory.php';
+require_once './Formatter.php';
 
 
-$inputFileName = './files/test.xls';
-echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory to identify the format<br />';
-$objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
+
+$inputXLSFileName = './files/test.xls';
+$outCSVFileName = './files/report.csv';
 
 
-echo '<hr />';
+$formatter = new Formatter($inputXLSFileName, $outCSVFileName);
+$formatter->save();
 
-$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-var_dump($sheetData);
+
+
