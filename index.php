@@ -7,11 +7,15 @@ require_once './Formatter.php';
 
 
 
-$inputXLSFileName = './files/test.xls';
+$inputXLSFileName = './files/report.xls';
 $outCSVFileName = './files/report.csv';
+$subdivisionFile = './config/subdivision.php';
+$subdivisions = '';
+if(file_exists($subdivisionFile) && is_readable($subdivisionFile)){
+    $subdivisions = require_once $subdivisionFile;
+}
 
-
-$formatter = new Formatter($inputXLSFileName, $outCSVFileName);
+$formatter = new Formatter($inputXLSFileName, $outCSVFileName, $subdivisions);
 $formatter->save();
 
 

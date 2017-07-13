@@ -10,13 +10,15 @@ class Formatter{
     private $objPHPExcel;
     private $csvFp;
     private $sheetData;
+    private $subdivisions;
 
     private $outCSVFileName;
 
 
-    public function __construct($inputXLSFileName, $outCSVFileName)
+    public function __construct($inputXLSFileName, $outCSVFileName, $subdivisions)
     {
         $this->outCSVFileName = $outCSVFileName;
+        $this->subdivisions = $subdivisions;
         echo 'Loading file ',pathinfo($inputXLSFileName,PATHINFO_BASENAME),' using IOFactory to identify the format';
         $this->objPHPExcel = PHPExcel_IOFactory::load($inputXLSFileName);
         $this->csvFp = fopen($outCSVFileName, 'w');
@@ -24,18 +26,21 @@ class Formatter{
     }
 
     public function save(){
+        $currentDivision = '';
         foreach ($this->sheetData as $item){
-
+            if (is_numeric($item['B']) && (strlen($item['B']) != 1)){
+                $currentDivision = $this->subdivisions[$item['B']];
+            }
             if(is_numeric($item['B']) && (strlen($item['B']) == 1)){
                 fputcsv($this->csvFp, [
                     '',
                     $this->formatDate($item['F']),
                     $this->formatTime($item['F']),
-                    $item['C'],
+                    "($currentDivision)".$item['C'],
                     str_replace(' ', '',$item['E']),
                     $item['D'],
                     $item['Q'],
-                    $item['S'],
+                    (float)$item['S'],
                     '',
                 ], '|');
             }
