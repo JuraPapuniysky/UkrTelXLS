@@ -7,8 +7,8 @@ require_once './Formatter.php';
 
 
 
-$inputXLSFileName = './files/rep05092017.xls';
-$outCSVFileName = './files/rep05092017.csv';
+$inputXLSFileName = './files/09.01.2019.xls';
+$outCSVFileName = './files/rep09.01.2019.csv';
 $subdivisionFile = './config/subdivision.php';
 $subdivisions = '';
 if(file_exists($subdivisionFile) && is_readable($subdivisionFile)){

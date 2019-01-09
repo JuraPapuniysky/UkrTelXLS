@@ -53,7 +53,12 @@ class Formatter{
     }
 
     private function formatDate($xlsDateTime){
-        return str_replace('/', '.', substr($xlsDateTime, 0, 5)).'.'.date('Y');
+    	$currentYear = date('Y');
+    	$currenntMonth = date('m');
+    	if ($currenntMonth == '01'){
+    		$currentYear = date('Y') - 1;
+    	}
+        return str_replace('/', '.', substr($xlsDateTime, 0, 5)) . '.' . $currentYear;
     }
 
     private function formatTime($xlsDateTime){
